@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Objekter</title>
+</head>
+
+<body>
+    <article>
+    <h3></h3>
+    <img src="" alt="">
+    <p></p>
+    <p></p>
+    </article>
+    <script>
+        let dyr ={
+            "navn": "Gris",
+            "type": "Pattedyr",
+            "levested": "svinesti",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+        }
+       let elm = document.querySelector("article");
+
+            console.log(dyr);
+            //elm.innerHTML = `<img src=${dyr.billede}><p>Navn: ${dyr.navn} Type: ${dyr.type} Levested: ${dyr.levested} </p>`;
+            elm.querySelector("img").src = dyr.billede;
+            elm.querySelector("h3").textContent = dyr.navn;
+            elm.querySelector("p").textContent = "Type: "+dyr.type;
+            //elm.querySelector("p:last-child").textContent = "Levested: "+dyr.levested;
+            //elm.querySelector("p:last-of-type").textContent = "Bor i: "+dyr.levested;
+            elm.querySelector("p + p").textContent = "Lever i: "+dyr.levested;
+
+
+
+
+    </script>
+</body>
+
+</html>

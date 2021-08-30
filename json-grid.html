@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Objekter</title>
+    <style>
+        article {
+            border: 1px solid #333;
+            padding: 10px;
+        }
+
+        img {
+            max-width: 30%;
+        }
+
+        section {
+            width: 90vw;
+            max-width: 1200px;
+            margin: 0 auto;
+            display:grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fill,minmax(290px,1fr));
+
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+
+    </section>
+
+    <template>
+        <article>
+            <h2></h2>
+            <img src="" alt="">
+            <p class="art"></p>
+            <p class="sted"></p>
+        </article>
+    </template>
+    <script>
+        //variabler
+        let dyr;
+        let container;
+        let temp;
+
+        document.addEventListener("DOMContentLoaded", start);
+
+        function start() {
+            container = document.querySelector("section");
+            temp = document.querySelector("template");
+
+            hentdata();
+        }
+
+        async function hentdata() {
+            const response = await fetch("dyr.json");
+            dyr = await response.json();
+            visDyr();
+        }
+
+
+        function visDyr() {
+
+            //løb igennem array "dyr"
+            dyr.forEach(etDyr => {
+
+                let klon = temp.cloneNode(true).content;
+                klon.querySelector("h2").textContent = etDyr.navn;
+                klon.querySelector(".art").textContent = etDyr.type;
+                klon.querySelector(".sted").textContent = etDyr.levested;
+                klon.querySelector("img").src = etDyr.billede;
+                container.appendChild(klon);
+
+
+            })
+
+        }
+    </script>
+</body></html>

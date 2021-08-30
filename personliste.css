@@ -1,0 +1,17 @@
+.liste-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 1em;
+}
+
+article {
+  padding: 0.5em;
+  border: 1px solid orange;
+}
+
+img {
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+}

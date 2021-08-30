@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Objekter</title>
+</head>
+
+<body>
+    <article>
+
+    </article>
+    <script>
+        let dyr ={
+            "navn": "Gris",
+            "type": "Pattedyr",
+            "levested": "svinesti",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+        }
+       let elm = document.querySelector("article");
+
+            console.log(dyr);
+            elm.innerHTML = `<img src=${dyr.billede}><p>Navn: ${dyr.navn} Type: ${dyr.type} Levested: ${dyr.levested} </p>`;
+
+
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  background-color: darkorange;
+}
+header img {
+  height: auto;
+}
+img {
+  max-width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+nav {
+  padding-inline: calc(1rem - 5px);
+}
+button {
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid darkorange;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+}
+main {
+  background: darkorange;
+  padding-inline: 1rem;
+}
+footer {
+  background: #666;
+  color: #ddd;
+}
+footer section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 10px;
+}
+.retcontainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+  gap: 1rem;
+}
+article {
+  box-sizing: border-box;
+  padding: 1rem;
+  background: #fff9;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+article div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff9;
+  margin: -50px 0 0 0;
+  min-height: 260px;
+  padding-inline: 10px;
+}
+.single div {
+  min-height: auto;
+  padding-block: 20px;
+}
+.single div h2 {
+  padding-bottom: 20px;
+}
+
+article:nth-child(odd) {
+  background: #fff6;
+}
+.valgt {
+  background-color: darkorange;
+}

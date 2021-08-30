@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div class="popup">
+  <div class="popup-content">
+	  <button>Close</button>
+    <h2 class="single-titel" data-titel>test</h2>
+    <img src="" alt="" class="single-img" data-singleimg>
+    <details open>
+  <summary >Beskrivelse</summary>
+ <p data-beskrivelse>Her står noget tekst</p>
+</details>
+  </div>
+  </div>
+    
+    <script>
+    
+    const Urlparameter = new URLSearchParams(window.location.search);
+        
+    const retId = Urlparameter.get("id");
+        
+        console.log(retId);
+        
+        
+        let retter;
+        
+        document.addEventListener("DOMContentLoaded", getJson);
+
+ async function getJson() {
+           let jsonData = await fetch("https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json");
+    
+    let tempVar = await jsonData.json();
+    retter = tempVar.feed.entry;
+        
+        visRet();
+        }
+    
+    
+        function visRet(){
+            
+            retter.forEach(ret=>{
+                
+                if(ret.gsx$id.$t == retId){
+                    
+                    console.log(ret);
+                    
+            
+            document.querySelector(".popup h2").textContent = ret.gsx$navn.$t;
+            document.querySelector(".popup img").src = `imgs/large/${ret.gsx$billede.$t}.jpg`;
+            document.querySelector(".popup img").alt = ret.gsx$navn.$t;
+            document.querySelector(".popup details p").textContent = ret.gsx$lang.$t;
+                }
+                
+                
+            })
+        }
+    
+    
+    </script>
+</body>
+</html>

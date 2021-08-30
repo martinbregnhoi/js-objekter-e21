@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            background: #123456;
+            gap: 1rem;
+        }
+
+        img{
+            max-width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        article{
+            padding: 1rem;
+            background: #fff9;
+              display: flex;
+            flex-direction: column;
+
+        }
+        article div{
+            display: flex;
+            flex-direction: column;
+    justify-content: space-between;
+            background: #fff9;
+            margin:-50px 0 0 0;
+            min-height: 260px;
+        }
+
+        article:nth-child(odd) {
+            background: #fff6;
+        }
+
+    </style>
+</head>
+
+<body>
+    <template>
+        <article>
+            <img src="" alt="">
+            <div>
+            <h2></h2>
+            <p class="tekst"></p>
+            <p class="kategori"></p>
+            <p class="pris"></p>
+            </div>
+        </article>
+    </template>
+    <section class="retcontainer">
+    </section>
+    <script>
+        let retter;
+        const billedUrl = "https://babushka-dd8a.restdb.io/media/";
+        const dbUrl = "https://babushka-dd8a.restdb.io/rest/menu";
+        const key = '600ec2fb1346a1524ff12de4';
+
+        async function getJson() { 
+            const data = await fetch(dbUrl, {
+                method: 'GET',
+                headers: {
+                   'Content-Type': 'application/json', 'x-apikey': key , 'cache-control': "no-cache"   }
+            });
+            retter = await data.json();
+            console.log(retter);
+            visRetter();
+        }
+
+        function visRetter() {
+            let temp = document.querySelector("template");
+            let container = document.querySelector(".retcontainer")
+            retter.forEach(ret => {
+                let klon = temp.cloneNode(true).content;
+                klon.querySelector("h2").textContent = ret.navn;
+                klon.querySelector("img").src = billedUrl+ ret.billede;
+                klon.querySelector(".kategori").textContent = ret.kategori;
+                klon.querySelector(".tekst").textContent = ret.kortbeskrivelse;
+                klon.querySelector(".pris").textContent = ret.pris;
+                klon.querySelector("article").addEventListener("click", ()=> {location.href = "restdb-single.html?id="+ret._id; })
+                container.appendChild(klon);
+            })
+        }
+
+        getJson();
+
+    </script>
+</body>
+
+</html>
