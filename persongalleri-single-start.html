@@ -18,6 +18,7 @@
             <p class="titel"></p>
             <p class="hobby"></p>
             <p class="fødselsdag"></p>
+            <p class="email"></p>
         </section>
             
         </article>
@@ -44,6 +45,11 @@ document.addEventListener("DOMContentLoaded", hentData);
 function visPerson(){
 
     document.querySelector("h2").textContent = person.fornavn;
+    document.querySelector(".hobby").textContent = person.hobby;
+    document.querySelector(".titel").textContent = person.titel;
+    document.querySelector(".fødselsdag").textContent = person.fornavn+" "+person.efternavn;
+    document.querySelector(".email").textContent = person.email;
+    document.querySelector("img").src = "faces/"+person.billede;
 
 }
 

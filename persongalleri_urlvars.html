@@ -148,7 +148,7 @@
           if (filter == "alle" || filter == person.troende) {
             const klon = template.cloneNode(true);
             klon.querySelector(".billedurl").src = "faces/" + person.billede;
-            klon.querySelector(".navn").textContent = person.fornavn;
+            klon.querySelector(".navn").textContent = person.fornavn+" "+person.efternavn;
             klon.querySelector("article").addEventListener("click",()=>{
               location.href = "persongalleri-single-start.html?id="+person._id;
             })
