@@ -1,0 +1,34 @@
+.liste-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1em;
+}
+
+article {
+  padding: 0.5em;
+  border: 1px solid orange;
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+  border-radius: 0;
+  border: 1px solid orange;
+  font-size: 1rem;
+  background: none;
+}
+#single main {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+#single article {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.valgt {
+  background-color: orange;
+}

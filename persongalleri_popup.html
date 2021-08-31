@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popup</title>
+    <style>
+      main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-gap: 1em;
+        justify-content: center;
+        margin-top: 1em;
+      }
+
+      article {
+        padding: 0.5em;
+        border: 1px solid orange;
+        border-radius: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: center;
+      }
+
+      main article {
+        cursor: pointer;
+      }
+
+      img {
+        max-width: 100%;
+        border-radius: 0.5em;
+      }
+
+      #popup {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow: scroll;
+      }
+
+      #popup article {
+        width: 80vw;
+        display: flex;
+        margin: 4rem auto;
+        border-radius: 25px;
+        padding: 12px;
+        background-color: white;
+      }
+
+      #luk {
+        position: fixed;
+        padding: 1em;
+        font-size: 1.7em;
+        font-weight: bolder;
+        color: white;
+        cursor: pointer;
+      }
+
+      button {
+        border-radius: 8px;
+        margin-right: 0.5em;
+        padding: .3em .5em;
+        border: 1px solid orange;
+        background-color: white;
+      }
+
+      .valgt {
+        background-color: greenyellow;
+      }
+
+      #popup p{
+        line-height: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Persongalleri</h1>
+    <header>
+      <button class="filterKnap valgt" data-tro="alle">Alle</button>
+      <button class="filterKnap" data-tro="ja">Troende</button>
+      <button class="filterKnap" data-tro="nej">Ikke troende</button>
+      <button class="filterKnap" data-tro="tvivler">Tvivler</button>
+    </header>
+
+    <h2 id="troTekst">Alle</h2>
+    <main></main>
+
+    <template>
+      <article>
+        <img src="" alt="billede" class="billedurl" />
+        <h2 class="navn"></h2>
+      </article>
+    </template>
+
+    <section id="popup">
+      <div id="luk">&#x2715</div>
+      <article>
+        <h2></h2>
+        <img src="" alt="" />
+        <h3>Titel: <span class="titel"></span></h3>
+        <p>Email: <span class="email"></span></p>
+        <p>Fødselsdag: <span class="fdag"></span></p>
+        <p>Hobby: <span class="hobby"></span></p>
+        <p>Troende: <span class="tro"></span></p>
+      </article>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", start);
+
+      const url = "https://persongalleri-5d3e.restdb.io/rest/persongalleri";
+      const options = {
+        headers: {
+          "x-apikey": "600fe9211346a1524ff12e31",
+        },
+      };
+
+      let filter = "alle";
+      let main, template, json;
+
+      function start() {
+        main = document.querySelector("main");
+        template = document.querySelector("template").content;
+        addEventListenersToButtons();
+        hentData();
+      }
+
+      function addEventListenersToButtons() {
+        document.querySelectorAll(".filterKnap").forEach((btn) => {
+          btn.addEventListener("click", filtrer);
+        });
+      }
+
+      function filtrer() {
+        filter = this.dataset.tro;
+        document.querySelector("#troTekst").textContent = this.textContent;
+        document.querySelector(".valgt").classList.remove("valgt");
+        this.classList.add("valgt");
+        console.log(filter);
+        visPersoner();
+      }
+
+      async function hentData() {
+        const resspons = await fetch(url, options);
+        json = await resspons.json();
+        visPersoner();
+      }
+
+      function visPersoner() {
+        main.textContent = "";
+        json.forEach((person) => {
+          if (filter == "alle" || filter == person.troende) {
+            const klon = template.cloneNode(true);
+            klon.querySelector(".billedurl").src = "faces/" + person.billede;
+            klon.querySelector(".navn").textContent = person.fornavn;
+            klon
+              .querySelector("article")
+              .addEventListener("click", () => visDetaljer(person));
+            main.appendChild(klon);
+          }
+        });
+      }
+
+      function visDetaljer(person) {
+        popup.style.display = "block";
+        popup.querySelector("img").src = "faces/" + person.billede;
+        popup.querySelector("h2").textContent =
+          person.fornavn + " " + person.efternavn;
+        popup.querySelector(".titel").textContent = person.titel;
+        popup.querySelector(".email").textContent = person.email;
+        const fdag = person.fødselsdag.slice(8, 10);
+        const fmd = person.fødselsdag.slice(5, 7);
+        const faar = person.fødselsdag.slice(0, 4);
+        console.log(fdag, fmd, faar);
+        popup.querySelector(".fdag").textContent = fdag + " " + fmd + " " + faar;
+        popup.querySelector(".hobby").textContent = person.hobby;
+        popup.querySelector(".tro").textContent = person.troende;
+      }
+
+      document
+        .querySelector("#luk")
+        .addEventListener("click", () => (popup.style.display = "none"));
+    </script>
+  </body>
+</html>
